@@ -1,0 +1,156 @@
+\documentclass[main]{subfiles}
+\title{Intro}
+\author{Chuwen Zhang}
+\date{\today}
+\begin{document}
+\maketitle
+{
+    \setcounter{tocdepth}{3}
+    \tableofcontents
+}
+
+\section{Preface}
+
+This notes is written for basic knowledge on Interior Point Method (IPM). Also see \cite{ye_interior_1997}, \cite{roos_interior_2005}.
+We begin with Linear Programming (LP), then move onto advanced problem classes.
+
+\section{Interior Point Method for Linear Programming}
+
+\subsection{Elements}
+
+We inspect primal dual form of linear programming or linear optimization problems.
+
+\begin{equation}
+    \begin{aligned}
+        \mn & c^T x         \\
+        \st & A x=b, x\ge 0
+    \end{aligned}
+\end{equation}
+
+\begin{equation}
+    \begin{aligned}
+        \mx & b^Ty                  \\
+        \st & A^{T} y+s=c, s \geq 0
+    \end{aligned}
+\end{equation}
+
+and the following remarks,
+
+\begin{itemize}
+    \item Feasible region \(\mathscr F_P, \mathscr F_D\) for primal dual respectively.
+          We let \(F^\circ_{(\cdot)}\) be the relative interior.
+          Strong duality holds if \(F^\circ_{P}, F^\circ_{P}\) are nonempty.
+    \item
+\end{itemize}
+
+\subsubsection{The analytic center}
+
+The \textbf{analytic center, AC} is defined as the minimizer of \textbf{potential function} on a non-empty set \(\Omega\).
+
+If \(\Omega\) is defined (as usual) in form \(\Omega = \{x :  g(x) \ge 0\}\), assume \(\Omega^\circ \neq \emptyset\), the potential function / barrier is,
+
+\begin{equation}
+    \psi(x) = - \log g^Te
+\end{equation}
+
+% \begin{example} 
+% \(\psi\) on positive orthant For the feasible set \(\Omega_x = \{x \ge 0\}\)
+% \begin{equation}
+%     \begin{aligned}
+%         \psi(x)                                    & =  - \log x^Te    \\
+%         \partial \psi / \partial x = 0 \Rightarrow & - \frac{e}{x} = 0 \\
+%         \textrm{Alternatively}                     &                   \\
+%                                                    & x \circ v = e     \\
+%                                                    & v = 0
+%     \end{aligned}
+% \end{equation}
+% \end{example}
+
+
+\begin{equation}
+    x \circ v = e, \quad Ax = b
+\end{equation}
+\begin{example}
+    \(\psi\) on half space.  For the feasible set \(\Omega_y = \{y: c - A^Ty \ge 0\}\)
+    \begin{equation}\label{lp.ac.example.y}
+        \begin{aligned}
+            \psi(y)                                    & = -  \log s ^T e        \\
+            \partial \psi / \partial y = 0 \Rightarrow & - \frac{A}{c- A^Ty} = 0 \\
+            \textrm{Alternatively}                     &                         \\
+                                                       & c- A^Ty = s             \\
+                                                       & s \circ u = e           \\
+                                                       & Au = 0
+        \end{aligned}
+    \end{equation}
+\end{example}
+For the case with extra equalities (always active) \(\Omega_y = \{y: c - A^Ty \ge 0\} \bigcap \{y: Ay = b\}\), since the analytic center also lies in the original space, we have \(y^a, s^a\) satisfies \eqref{lp.ac.example.y} + \(\{y: Ay = b\}\).
+
+\subsubsection{The central path}
+
+\paragraph{Primal} notice the primal potential function and the barrier problem, \(\forall \mu \ge 0\)
+\begin{equation}
+    \begin{aligned}
+        \mn & \psi(x) = c^Tx - \mu\log x^Te \\
+        \st & Ax = b, x > 0
+    \end{aligned}
+\end{equation}
+
+The first-order condition,
+\begin{equation} \label{lp.central.path}
+    \begin{aligned}
+        x \circ s & =\mu e \\
+        A x       & =b     \\
+        A^T y+s   & =c
+    \end{aligned}
+\end{equation}
+
+depicts the curvature parameterized by \(\mu\). The curvature is named as ``the central path''.
+\begin{itemize}
+    \item \(\mu \to 0\), \(x(\mu)\) solves primal problem that approaches to AC of the optimal face: \(\{x: c^Tx = z^\star, Ax=b, x\ge 0\}\)
+    \item \(\mu \to \infty\), \(x(\mu)\) approaches to the analytic center (if bounded)
+\end{itemize}
+
+Now it's clear to see the central path is the ``path'' connecting the AC and optimal solution (if exists).
+
+\paragraph{Dual} similarly, we can define the (dual) central path by the log-barrier function,
+\begin{equation}
+    \begin{aligned}
+        \mn & \psi(x)                                 = b^Ty + \mu\log s^Te \\
+        \st & c - A^Ty = s, s > 0
+    \end{aligned}
+\end{equation}
+as well as the \(1^\textrm{st}\) order condition that coincides with \eqref{lp.central.path}.
+\paragraph{Primal-Dual} A combining view on central path is to see \eqref{lp.central.path} as the parameterization simultaneously on \((x, y, s)\).
+\begin{itemize}
+    \item One see duality gap: \(c^Tx - b^Ty = n\mu\)
+    \item \(x \circ s =\mu e\) is sometimes referred to as perturbed complementary condition (\textbf{TCC}).
+\end{itemize}
+
+\subsubsection{An overview of IPM}
+
+Now it becomes clear to us, the interior point method gradually shrinks \(\mu \to 0\) hoping to approach the original problem.
+\begin{itemize}
+    \item The outer loop produces the central path \(\left(x(\mu), y(\mu), s(\mu)\right)\) (or a subset of interest)
+    \item The inner subproblem solves the central path system \eqref{lp.central.path}
+\end{itemize}
+
+The Newton's equation for \eqref{lp.central.path} can be derived as,
+
+\begin{equation}
+    
+\end{equation}
+
+% IPM can be classified into several basic classes.
+% \begin{itemize}
+%     \item Karmarkar's Algorithm, \cite{karmarkar_new_1984}
+%     \item Potential Reduction algorithm (\textbf{PR})
+%     \item Path Following algorithm (\textbf{PF})
+%     \item Affine Scaling algorithm (\textbf{AS})
+% \end{itemize}
+
+\subsection{Timeline}
+
+\bibliography{headers/ipm}
+\bibliographystyle{headers/spmpsci}
+\addcontentsline{toc}{section}{References}
+\end{document}

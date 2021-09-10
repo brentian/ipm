@@ -1,0 +1,51 @@
+\input{headers/header.mp}
+\title{Global QCQP Solver}
+\author{Chuwen Zhang}
+\date{\today}
+
+\usepackage{amsfonts} 
+\usepackage{amsmath}
+% \usepackage{mathptmx}
+\usepackage{stix}
+\usepackage{subfiles}
+\usepackage{graphicx} 
+\usepackage{subfig}
+\usepackage{bm}
+\usepackage[table]{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+
+%%%%%%%%%%%%%%%%
+% start my commands
+%%%%%%%%%%%%%%%%
+\newcommand{\trace}{\mathbf{trace}}
+\newcommand{\diag}{\mathbf{diag}}
+\newcommand{\model}[1]{(\textbf{#1})}
+\newcommand{\mx}{\mathrm{Maximize:\;}}
+\newcommand{\mn}{\mathrm{Minimize:\;}}
+\newcommand{\st}{\mathrm{s.t.\;}}
+%%%%%%%%%%%%%%%%
+% finish my commands
+%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\maketitle
+{
+    \setcounter{tocdepth}{3}
+    \tableofcontents
+}
+% \subfile{sections/intro.tex}
+\subfile{intro.tex}
+\subfile{bigm.tex}
+
+\bibliography{headers/ipm}
+\bibliographystyle{headers/spmpsci}
+\addcontentsline{toc}{section}{References}
+
+% finish off
+
+
+\section*{Appendix}\label{sec:appendix}
+
+\end{document}

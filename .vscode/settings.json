@@ -1,0 +1,55 @@
+{
+    "editor.fontFamily": "'ubuntu mono'",
+    "editor.fontWeight": "500",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 1.2,
+    "markdown.styles": [
+        "./assets/markdown.css"
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "xetexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                // "-f",
+                "-cd",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-xelatex",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk",
+            "tools": [
+                "xetexmk"
+            ]
+        },
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "xetexmk"
+            ]
+        },
+        {
+            "name": "xelatex",
+            "tools": [
+                "xetexmk"
+            ]
+        },
+    ],
+    "latex-workshop.latex.autoBuild.run": "onSave"
+}
